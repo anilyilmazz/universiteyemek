@@ -6,7 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 def vericek():
-
+	
 	site  = requests.get("https://www.trakya.edu.tr/yemek-listesi/",headers={'User-Agent': 'Mozilla/5.0'})
 	soup = BeautifulSoup(site.text, 'html.parser')
 	sonuclar = soup.find_all('span',attrs = {'class' : 'text-nowrap'})
@@ -20,16 +20,16 @@ def mailgonder():
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
 	server.starttls()
-	server.login("ogrencidagitimsistemi@gmail.com", "trakyauniversitesi")
+	server.login("E-MAİL", "ŞİFRE")
 	text = vericek()
 
 	for mailler in mailadresleri:	
-		fromx = 'ogrencidagitimsistemi@gmail.com'
+		fromx = 'EMAİL'
 		msg = MIMEText(text)
 		msg['Subject'] = konu
 		msg['From'] = fromx
 		msg['To'] = mailler
-		server.sendmail("ogrencidagitimsistemi@gmail.com",mailler,msg.as_string())	
+		server.sendmail("EMAİL",mailler,msg.as_string())	
 	server.close()
 	#threading.Timer(86400,mailgonder).start()
 
